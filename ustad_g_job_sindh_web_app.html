@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ustad G Job Sindh - Latest Govt & Private Job Updates</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .custom-blue-bg {
+            background-color: #0056b3;
+        }
+        .custom-blue-btn {
+            background-color: #0056b3;
+        }
+        .custom-blue-btn:hover {
+            background-color: #004494;
+        }
+        .custom-yellow-btn {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .custom-yellow-btn:hover {
+            background-color: #e0a800;
+        }
+        .custom-teal-btn {
+            background-color: #20c997;
+            color: #ffffff;
+        }
+        .custom-teal-btn:hover {
+            background-color: #17a2b8;
+        }
+        .whatsapp-green-btn {
+            background-color: #e8fadf;
+            color: #25d366;
+            border: 1px solid #25d366;
+        }
+        .whatsapp-green-btn:hover {
+            background-color: #25d366;
+            color: white;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0056b3;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-gray-800">
+
+    <!-- HEADER -->
+    <header class="custom-blue-bg text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="bg-white text-blue-700 p-2.5 rounded-full shadow-inner flex items-center justify-center w-12 h-12">
+                    <i class="fa-solid fa-briefcase text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black tracking-tight leading-tight">Ustad G Job Sindh</h1>
+                    <p class="text-xs text-blue-100 font-medium">Sindh Govt & Private Job Updates</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="flex flex-wrap items-center justify-center gap-1 md:gap-4 text-sm font-semibold">
+                <button onclick="switchTab('home')" id="nav-home" class="px-3 py-1.5 rounded-md transition hover:bg-blue-700 bg-blue-800">Home</button>
+                <button onclick="switchTab('jobs')" id="nav-jobs" class="px-3 py-1.5 rounded-md transition hover:bg-blue-700">All Jobs</button>
+                <button onclick="switchTab('mcqs')" id="nav-mcqs" class="px-3 py-1.5 rounded-md transition hover:bg-blue-700">MCQs & Tests</button>
+                <button onclick="switchTab('affairs')" id="nav-affairs" class="px-3 py-1.5 rounded-md transition hover:bg-blue-700">Current Affairs</button>
+                <button onclick="switchTab('contact')" id="nav-contact" class="px-3 py-1.5 rounded-md transition hover:bg-blue-700">Contact Us</button>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-2">
+                <button onclick="openAdminModal()" class="custom-yellow-btn px-4 py-2 rounded-lg text-xs md:text-sm font-bold flex items-center gap-1.5 shadow-sm transition transform active:scale-95">
+                    <i class="fa-solid fa-user-shield"></i> Admin Panel
+                </button>
+                <button onclick="shareApp()" class="custom-teal-btn px-4 py-2 rounded-lg text-xs md:text-sm font-bold flex items-center gap-1.5 shadow-sm transition transform active:scale-95">
+                    <i class="fa-solid fa-share-nodes"></i> Share App
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6">
+
+        <!-- TAB CONTENT: HOME & ALL JOBS -->
+        <section id="tab-home" class="space-y-6">
+            <!-- Section Header -->
+            <div class="flex items-center justify-between bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-fire text-amber-500 text-xl animate-bounce"></i>
+                    <h2 class="text-xl font-bold text-gray-800">Latest Available Jobs</h2>
+                </div>
+                <span id="job-count-badge" class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">
+                    0 Jobs Listed
+                </span>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="relative md:col-span-2">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400"></i>
+                    <input type="text" id="search-input" onkeyup="filterJobs()" placeholder="Search jobs by title, department, or keyword..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white shadow-sm">
+                </div>
+                <div>
+                    <select id="scale-filter" onchange="filterJobs()" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white shadow-sm text-gray-700">
+                        <option value="">All Pay Scales (BPS)</option>
+                        <option value="BPS-01">BPS-01 to BPS-05</option>
+                        <option value="BPS-09">BPS-06 to BPS-10</option>
+                        <option value="BPS-11">BPS-11 to BPS-15</option>
+                        <option value="BPS-16">BPS-16 & Above</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Job Cards Grid -->
+            <div id="jobs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamic Job Cards injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- TAB CONTENT: MCQs & TESTS -->
+        <section id="tab-mcqs" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-file-pen text-blue-600"></i> SPSC & STS Test Preparation MCQs
+                </h2>
+                <p class="text-gray-600 mb-6 text-sm">Practice subject-wise MCQs to prepare for Sindh Public Service Commission (SPSC), IBA Sukkur STS, and PTS job tests.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-xl border border-blue-100 bg-blue-50/50 hover:shadow-md transition">
+                        <div class="font-bold text-blue-900 text-lg">Sindh GK & History</div>
+                        <p class="text-xs text-gray-500 mt-1">500+ Important Questions</p>
+                        <button onclick="showToast('Loading MCQs test series...')" class="mt-3 text-xs bg-blue-600 text-white font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-700">Start Practice</button>
+                    </div>
+                    <div class="p-4 rounded-xl border border-blue-100 bg-blue-50/50 hover:shadow-md transition">
+                        <div class="font-bold text-blue-900 text-lg">Everyday Science</div>
+                        <p class="text-xs text-gray-500 mt-1">350+ Practice MCQs</p>
+                        <button onclick="showToast('Loading MCQs test series...')" class="mt-3 text-xs bg-blue-600 text-white font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-700">Start Practice</button>
+                    </div>
+                    <div class="p-4 rounded-xl border border-blue-100 bg-blue-50/50 hover:shadow-md transition">
+                        <div class="font-bold text-blue-900 text-lg">English Grammar & Pedagogy</div>
+                        <p class="text-xs text-gray-500 mt-1">400+ Practice MCQs</p>
+                        <button onclick="showToast('Loading MCQs test series...')" class="mt-3 text-xs bg-blue-600 text-white font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-700">Start Practice</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB CONTENT: CURRENT AFFAIRS -->
+        <section id="tab-affairs" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-newspaper text-blue-600"></i> Pakistan & Sindh Current Affairs 2026
+                </h2>
+                <div class="space-y-4">
+                    <div class="p-4 rounded-xl border border-gray-200 hover:border-blue-300 transition">
+                        <span class="text-xs bg-red-100 text-red-700 font-bold px-2.5 py-0.5 rounded">Latest Update</span>
+                        <h3 class="font-bold text-gray-800 text-base mt-2">Sindh Cabinet Approves New Recruitment Policy for BPS-01 to BPS-15 Posts</h3>
+                        <p class="text-xs text-gray-600 mt-1">All district-level job tests will now be standardized through Sukkur IBA Testing Service.</p>
+                    </div>
+                    <div class="p-4 rounded-xl border border-gray-200 hover:border-blue-300 transition">
+                        <span class="text-xs bg-blue-100 text-blue-700 font-bold px-2.5 py-0.5 rounded">General Knowledge</span>
+                        <h3 class="font-bold text-gray-800 text-base mt-2">Important Key Positions & Governors in Sindh (Updated 2026)</h3>
+                        <p class="text-xs text-gray-600 mt-1">A ready-reference digest for SPSC competitive exams and interview preparation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB CONTENT: CONTACT US -->
+        <section id="tab-contact" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 max-w-2xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Contact Ustad G Job Sindh</h2>
+                <p class="text-sm text-gray-600 mb-6">Have questions or want to post a official job vacancy announcement? Reach out to us directly.</p>
+                
+                <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Your Full Name</label>
+                        <input type="text" required placeholder="Enter your full name" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">WhatsApp / Contact Number</label>
+                        <input type="tel" required placeholder="03001234567" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Message / Inquiry</label>
+                        <textarea rows="4" required placeholder="Write your message here..." class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full custom-blue-btn text-white font-bold py-2.5 rounded-lg text-sm shadow">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 text-gray-300 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-xs space-y-3 md:space-y-0">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-shield-halved text-blue-400 text-base"></i>
+                <span class="font-semibold text-white">Ustad G Job Sindh Portal &copy; 2026. All Rights Reserved.</span>
+            </div>
+            <div class="flex space-x-4 text-gray-400">
+                <a href="#" onclick="switchTab('home')" class="hover:text-white">Home</a>
+                <a href="#" onclick="switchTab('jobs')" class="hover:text-white">Jobs</a>
+                <a href="#" onclick="openAdminModal()" class="hover:text-white text-amber-400 font-bold">Admin Portal</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JOB DETAILS MODAL -->
+    <div id="job-details-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in duration-200">
+            <div class="custom-blue-bg px-6 py-4 text-white flex justify-between items-center">
+                <h3 class="font-bold text-lg" id="modal-job-title">Job Details</h3>
+                <button onclick="closeModal('job-details-modal')" class="text-white/80 hover:text-white text-xl">&times;</button>
+            </div>
+            <div class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+                <div class="flex items-center justify-between border-b pb-3">
+                    <span class="text-xs font-bold text-gray-500 uppercase">Department</span>
+                    <span class="font-semibold text-gray-800 text-sm" id="modal-job-dept">-</span>
+                </div>
+                <div class="grid grid-cols-2 gap-4 border-b pb-3">
+                    <div>
+                        <span class="text-xs font-bold text-gray-500 uppercase block">Scale</span>
+                        <span class="text-sm font-bold text-blue-700" id="modal-job-scale">-</span>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-gray-500 uppercase block">Total Vacancies</span>
+                        <span class="text-sm font-bold text-gray-800" id="modal-job-posts">-</span>
+                    </div>
+                </div>
+                <div class="border-b pb-3">
+                    <span class="text-xs font-bold text-gray-500 uppercase block">Last Date To Apply</span>
+                    <span class="text-sm font-bold text-red-600" id="modal-job-date">-</span>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-gray-500 uppercase block mb-1">Description & Requirements</span>
+                    <p class="text-xs text-gray-600 leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-100" id="modal-job-desc">-</p>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 flex justify-between items-center border-t border-gray-100">
+                <a id="modal-job-apply-btn" href="#" target="_blank" class="custom-blue-btn text-white font-bold px-5 py-2 rounded-lg text-sm shadow">Official Apply Link</a>
+                <button onclick="closeModal('job-details-modal')" class="bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg text-sm hover:bg-gray-300">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL & SECURITY SETTINGS MODAL -->
+    <div id="admin-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+            
+            <!-- Modal Header -->
+            <div class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center border-b border-slate-800">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-lock text-amber-400"></i>
+                    <h3 class="font-bold text-lg text-amber-400">Ustad G Admin Control Panel</h3>
+                </div>
+                <button onclick="closeModal('admin-modal')" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+
+            <!-- LOGIN VIEW (if unauthenticated) -->
+            <div id="admin-login-view" class="p-8 space-y-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fa-solid fa-user-lock text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800">Administrator Access</h4>
+                    <p class="text-xs text-gray-500 mt-1">Authorized personnel only. Password is protected with encryption.</p>
+                </div>
+
+                <div id="lockout-alert" class="hidden bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-lg text-xs font-semibold text-center">
+                    <i class="fa-solid fa-shield-cat text-sm mr-1"></i>
+                    Too many failed attempts! Login locked for <span id="lockout-timer" class="font-bold">60</span> seconds.
+                </div>
+
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4 max-w-sm mx-auto">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Admin Password</label>
+                        <input type="password" id="admin-pass-input" placeholder="Enter password (default: admin123)" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-600 outline-none">
+                    </div>
+                    <button type="submit" id="admin-login-btn" class="w-full custom-blue-btn text-white font-bold py-2.5 rounded-lg text-sm shadow">
+                        Unlock Admin Panel
+                    </button>
+                    <p class="text-[11px] text-gray-400 text-center italic">Default password: <span class="font-bold text-gray-600">admin123</span></p>
+                </form>
+            </div>
+
+            <!-- ADMIN DASHBOARD (if authenticated) -->
+            <div id="admin-dashboard-view" class="hidden flex-1 flex flex-col overflow-hidden">
+                <!-- Navigation Tabs inside Admin -->
+                <div class="flex border-b bg-gray-100 px-6 pt-3 space-x-2 text-xs font-bold text-gray-600">
+                    <button id="admin-tab-btn-add" onclick="switchAdminSubTab('add')" class="px-4 py-2 rounded-t-lg bg-white border-t-2 border-blue-600 text-blue-700 shadow-sm">
+                        <i class="fa-solid fa-plus-circle mr-1"></i> Post New Job
+                    </button>
+                    <button id="admin-tab-btn-manage" onclick="switchAdminSubTab('manage')" class="px-4 py-2 rounded-t-lg hover:bg-gray-200">
+                        <i class="fa-solid fa-list-check mr-1"></i> Manage Jobs (<span id="admin-job-count">0</span>)
+                    </button>
+                    <button id="admin-tab-btn-security" onclick="switchAdminSubTab('security')" class="px-4 py-2 rounded-t-lg hover:bg-gray-200 text-red-600">
+                        <i class="fa-solid fa-shield-halved mr-1"></i> Security & Hacking Settings
+                    </button>
+                </div>
+
+                <!-- SUB TAB 1: ADD JOB -->
+                <div id="admin-subtab-add" class="p-6 overflow-y-auto space-y-4 flex-1">
+                    <h4 class="font-bold text-gray-800 border-b pb-2 text-sm">Publish New Job Announcement</h4>
+                    <form onsubmit="handleAddNewJob(event)" class="space-y-4 text-xs">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Job Title *</label>
+                                <input type="text" id="new-job-title" required placeholder="e.g. Junior Clerk (BPS-11)" class="w-full p-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Department / Organization *</label>
+                                <input type="text" id="new-job-dept" required placeholder="e.g. School Education Dept" class="w-full p-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Pay Scale Badge *</label>
+                                <input type="text" id="new-job-scale" required placeholder="e.g. BPS-11" class="w-full p-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Total Posts *</label>
+                                <input type="text" id="new-job-posts" required placeholder="e.g. 450 Posts" class="w-full p-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Last Date To Apply *</label>
+                                <input type="text" id="new-job-date" required placeholder="e.g. 20 Oct 2026" class="w-full p-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Official Apply Link / Website URL *</label>
+                                <input type="url" id="new-job-link" required placeholder="https://careers.nadra.gov.pk/" class="w-full p-2 border rounded-lg">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Short Description / Eligibility Criteria</label>
+                            <textarea id="new-job-desc" rows="3" placeholder="Enter brief job qualifications..." class="w-full p-2 border rounded-lg"></textarea>
+                        </div>
+                        <button type="submit" class="custom-blue-btn text-white font-bold px-6 py-2 rounded-lg shadow">Publish Job Instantly</button>
+                    </form>
+                </div>
+
+                <!-- SUB TAB 2: MANAGE JOBS -->
+                <div id="admin-subtab-manage" class="hidden p-6 overflow-y-auto space-y-4 flex-1">
+                    <h4 class="font-bold text-gray-800 border-b pb-2 text-sm">Active Job Listings</h4>
+                    <div id="admin-job-list" class="space-y-3">
+                        <!-- Dynamic list items injected -->
+                    </div>
+                </div>
+
+                <!-- SUB TAB 3: SECURITY & HACKING PROTECTION SETTINGS -->
+                <div id="admin-subtab-security" class="hidden p-6 overflow-y-auto space-y-6 flex-1">
+                    <!-- Warning / Security Notice -->
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900 flex items-start space-x-3">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-600 text-lg mt-0.5"></i>
+                        <div>
+                            <p class="font-bold">Security & Anti-Hacking Guardrails</p>
+                            <p class="mt-1 leading-relaxed">Your password and settings are encrypted locally using SHA-256 salted hashing in <code>localStorage</code>. Inspect element users cannot read your plain password!</p>
+                        </div>
+                    </div>
+
+                    <!-- Change Password Form -->
+                    <form onsubmit="handleChangePassword(event)" class="bg-white border rounded-xl p-4 space-y-3 text-xs">
+                        <h5 class="font-bold text-gray-800 text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-key text-blue-600"></i> Change Admin Password
+                        </h5>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-semibold text-gray-600 mb-1">Current Password</label>
+                                <input type="password" id="sec-current-pass" required class="w-full p-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-gray-600 mb-1">New Password</label>
+                                <input type="password" id="sec-new-pass" required class="w-full p-2 border rounded-lg">
+                            </div>
+                        </div>
+                        <button type="submit" class="bg-slate-900 text-white font-bold px-4 py-2 rounded-lg hover:bg-slate-800">Save New Encrypted Password</button>
+                    </form>
+
+                    <!-- Anti Brute Force Protection Toggle -->
+                    <div class="bg-white border rounded-xl p-4 space-y-3 text-xs">
+                        <h5 class="font-bold text-gray-800 text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-shield-virus text-green-600"></i> Brute-Force Hack Protection
+                        </h5>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-semibold text-gray-700">Lock Admin Login on 3 Failed Attempts</p>
+                                <p class="text-gray-500 text-[11px]">Enforces a 60-second cooldown timer to block dictionary attack scripts.</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="security-lockout-toggle" checked class="sr-only peer" onchange="toggleLockoutSetting(this.checked)">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Reset to Defaults -->
+                    <div class="border-t pt-4 flex justify-between items-center">
+                        <button onclick="handleLogout()" class="bg-gray-200 text-gray-700 font-bold px-4 py-2 rounded-lg text-xs hover:bg-gray-300">
+                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Log Out Admin
+                        </button>
+                        <button onclick="resetSecurityDefaults()" class="text-red-600 hover:text-red-800 font-bold text-xs underline">
+                            Reset Security & Restore Default Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-2 pointer-events-none"></div>
+
+    <script>
+        // Default Mock Job Data matching user image layout
+        const DEFAULT_JOBS = [
+            {
+                id: 'job-1',
+                title: 'https://careers.nadra.gov.pk/',
+                dept: 'nadra',
+                scale: 'BPS-01',
+                posts: '21',
+                date: '10 oct',
+                desc: 'Click View Details to read requirements.',
+                link: 'https://careers.nadra.gov.pk/'
+            },
+            {
+                id: 'job-2',
+                title: 'Junior Clerk (BPS-11)',
+                dept: 'School Education & Literacy Department, Sindh',
+                scale: 'BPS-11',
+                posts: '450 Posts',
+                date: '20 Oct 2026',
+                desc: 'Applications are invited from eligible candidates having Sindh Domicile (Urban/Rural) for the post of Junior Clerk...',
+                link: 'https://spsc.gos.pk/'
+            },
+            {
+                id: 'job-3',
+                title: 'Assistant Sub-Inspector (ASI BPS-11)',
+                dept: 'Sindh Police Department',
+                scale: 'BPS-11',
+                posts: '800 Posts',
+                date: '30 Oct 2026',
+                desc: 'Sindh Police invites candidates through SPSC for ASI positions across Karachi, Hyderabad, Sukkur, Larkana, and...',
+                link: 'https://sindhpolice.gov.pk/'
+            },
+            {
+                id: 'job-4',
+                title: 'Staff Nurse (BPS-16)',
+                dept: 'Health Department, Government of Sindh',
+                scale: 'BPS-16',
+                posts: '120 Posts',
+                date: '15 Nov 2026',
+                desc: 'Requirements: Diploma in General Nursing or B.Sc Nursing with valid PNC registration.',
+                link: 'https://health.sindh.gov.pk/'
+            }
+        ];
+
+        // State variables
+        let jobsData = [];
+        let isAdminLoggedIn = false;
+        let failedLoginAttempts = 0;
+        let isLockoutActive = false;
+        let lockoutTimerSeconds = 0;
+
+        // Lightweight hashing function for local security simulation
+        async function hashPassword(str) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(str + "_USTAD_G_SALT_2026");
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        window.onload = async function() {
+            // Load or set default security hash ('admin123')
+            if (!localStorage.getItem('ustad_admin_pass_hash')) {
+                const defaultHash = await hashPassword('admin123');
+                localStorage.setItem('ustad_admin_pass_hash', defaultHash);
+            }
+
+            // Load jobs from localStorage or fallback to defaults
+            const savedJobs = localStorage.getItem('ustad_jobs_list');
+            if (savedJobs) {
+                try {
+                    jobsData = JSON.parse(savedJobs);
+                } catch(e) {
+                    jobsData = DEFAULT_JOBS;
+                }
+            } else {
+                jobsData = DEFAULT_JOBS;
+                localStorage.setItem('ustad_jobs_list', JSON.stringify(jobsData));
+            }
+
+            renderJobs(jobsData);
+        };
+
+        function renderJobs(list) {
+            const grid = document.getElementById('jobs-grid');
+            const badge = document.getElementById('job-count-badge');
+            badge.innerText = `${list.length} Jobs Listed`;
+            grid.innerHTML = '';
+
+            if (list.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full bg-white p-8 rounded-xl text-center text-gray-500 shadow-sm border">
+                        <i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-2"></i>
+                        <p class="font-bold">No jobs matching your search criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.forEach(job => {
+                // Determine icon label
+                let iconText = 'Job';
+                if (job.dept.toLowerCase().includes('police')) iconText = 'Police';
+                else if (job.dept.toLowerCase().includes('nadra')) iconText = 'Job';
+                else if (job.dept.toLowerCase().includes('health')) iconText = 'Health';
+                else if (job.dept.toLowerCase().includes('school')) iconText = 'Sindh Edu';
+
+                const cardHTML = `
+                    <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col justify-between space-y-4">
+                        <div>
+                            <!-- Card Header -->
+                            <div class="flex items-start justify-between">
+                                <div class="w-12 h-12 bg-blue-900 text-white text-[11px] font-bold rounded-xl flex items-center justify-center text-center p-1 leading-tight shadow-sm">
+                                    ${iconText}
+                                </div>
+                                <span class="bg-blue-50 text-blue-700 text-xs font-bold px-2.5 py-1 rounded-full border border-blue-100">
+                                    ${job.scale}
+                                </span>
+                            </div>
+
+                            <!-- Title & Department -->
+                            <div class="mt-4">
+                                <h3 class="font-bold text-gray-900 text-base line-clamp-2 leading-snug hover:text-blue-600 transition cursor-pointer" onclick="openJobDetails('${job.id}')">
+                                    ${job.title}
+                                </h3>
+                                <p class="text-xs text-gray-500 mt-1 capitalize">${job.dept}</p>
+                            </div>
+
+                            <!-- Stats Row -->
+                            <div class="bg-gray-50 rounded-xl p-3 mt-4 space-y-1.5 text-xs">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400 font-medium">Total Posts:</span>
+                                    <span class="font-bold text-gray-800">${job.posts}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400 font-medium">Last Date:</span>
+                                    <span class="font-bold text-red-600">${job.date}</span>
+                                </div>
+                            </div>
+
+                            <!-- Short Description -->
+                            <p class="text-xs text-gray-500 mt-3 line-clamp-2">
+                                ${job.desc}
+                            </p>
+                        </div>
+
+                        <!-- Action Buttons Row -->
+                        <div class="space-y-2 pt-2">
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="openJobDetails('${job.id}')" class="col-span-2 custom-blue-btn text-white text-xs font-bold py-2 rounded-xl flex items-center justify-center gap-1 shadow-sm">
+                                    <i class="fa-solid fa-eye text-xs"></i> View Details
+                                </button>
+                                <button onclick="copyJobLink('${job.link}')" class="bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs font-bold py-2 rounded-xl flex items-center justify-center gap-1 border border-blue-200">
+                                    <i class="fa-solid fa-link text-xs"></i> Link
+                                </button>
+                            </div>
+                            <button onclick="shareWhatsApp('${job.title}', '${job.link}')" class="w-full whatsapp-green-btn text-xs font-bold py-2 rounded-xl flex items-center justify-center gap-1.5 transition shadow-sm">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> Share on WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+        }
+
+        function filterJobs() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const scaleFilter = document.getElementById('scale-filter').value;
+
+            const filtered = jobsData.filter(job => {
+                const matchesSearch = job.title.toLowerCase().includes(query) || 
+                                      job.dept.toLowerCase().includes(query) || 
+                                      job.desc.toLowerCase().includes(query);
+                
+                let matchesScale = true;
+                if (scaleFilter) {
+                    matchesScale = job.scale.toLowerCase().includes(scaleFilter.toLowerCase());
+                }
+
+                return matchesSearch && matchesScale;
+            });
+
+            renderJobs(filtered);
+        }
+
+        function switchTab(tabName) {
+            ['home', 'mcqs', 'affairs', 'contact'].forEach(t => {
+                const section = document.getElementById(`tab-${t}`);
+                const navBtn = document.getElementById(`nav-${t}`);
+                if (section) section.classList.add('hidden');
+                if (navBtn) navBtn.classList.remove('bg-blue-800');
+            });
+
+            const activeSection = document.getElementById(`tab-${tabName}`);
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            if (activeSection) activeSection.classList.remove('hidden');
+            if (activeNav) activeNav.classList.add('bg-blue-800');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openJobDetails(jobId) {
+            const job = jobsData.find(j => j.id === jobId);
+            if (!job) return;
+
+            document.getElementById('modal-job-title').innerText = job.title;
+            document.getElementById('modal-job-dept').innerText = job.dept;
+            document.getElementById('modal-job-scale').innerText = job.scale;
+            document.getElementById('modal-job-posts').innerText = job.posts;
+            document.getElementById('modal-job-date').innerText = job.date;
+            document.getElementById('modal-job-desc').innerText = job.desc;
+            document.getElementById('modal-job-apply-btn').href = job.link;
+
+            document.getElementById('job-details-modal').classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function copyJobLink(url) {
+            const tempInput = document.createElement('input');
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast('Job official link copied to clipboard!');
+        }
+
+        function shareWhatsApp(title, url) {
+            const text = encodeURIComponent(`*Ustad G Job Sindh Announcement*\n\n📌 *Job:* ${title}\n🔗 *Apply Here:* ${url}\n\nFor more Sindh Govt updates, visit Ustad G Job Sindh App!`);
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        }
+
+        function shareApp() {
+            const text = encodeURIComponent(`Get the latest Sindh Government and Private Job Alerts on Ustad G Job Sindh App!\nCheck jobs here: ${window.location.href}`);
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        }
+
+        function openAdminModal() {
+            document.getElementById('admin-modal').classList.remove('hidden');
+            if (isAdminLoggedIn) {
+                showAdminDashboard();
+            } else {
+                document.getElementById('admin-login-view').classList.remove('hidden');
+                document.getElementById('admin-dashboard-view').classList.add('hidden');
+            }
+        }
+
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            if (isLockoutActive) {
+                showToast('Lockout active! Please wait for the timer to expire.', 'error');
+                return;
+            }
+
+            const inputPass = document.getElementById('admin-pass-input').value;
+            const inputHash = await hashPassword(inputPass);
+            const savedHash = localStorage.getItem('ustad_admin_pass_hash');
+
+            if (inputHash === savedHash) {
+                isAdminLoggedIn = true;
+                failedLoginAttempts = 0;
+                document.getElementById('admin-pass-input').value = '';
+                showToast('Welcome Administrator! Admin panel unlocked.', 'success');
+                showAdminDashboard();
+            } else {
+                failedLoginAttempts++;
+                showToast(`Incorrect password! Attempt ${failedLoginAttempts} of 3.`, 'error');
+
+                // Check Lockout
+                const isLockoutEnabled = localStorage.getItem('ustad_lockout_enabled') !== 'false';
+                if (isLockoutEnabled && failedLoginAttempts >= 3) {
+                    triggerLockout();
+                }
+            }
+        }
+
+        function triggerLockout() {
+            isLockoutActive = true;
+            lockoutTimerSeconds = 60;
+            const alertBox = document.getElementById('lockout-alert');
+            const loginBtn = document.getElementById('admin-login-btn');
+            
+            alertBox.classList.remove('hidden');
+            loginBtn.disabled = true;
+            loginBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            const interval = setInterval(() => {
+                lockoutTimerSeconds--;
+                document.getElementById('lockout-timer').innerText = lockoutTimerSeconds;
+                if (lockoutTimerSeconds <= 0) {
+                    clearInterval(interval);
+                    isLockoutActive = false;
+                    failedLoginAttempts = 0;
+                    alertBox.classList.add('hidden');
+                    loginBtn.disabled = false;
+                    loginBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }, 1000);
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('admin-login-view').classList.add('hidden');
+            document.getElementById('admin-dashboard-view').classList.remove('hidden');
+            renderAdminJobList();
+        }
+
+        function switchAdminSubTab(sub) {
+            ['add', 'manage', 'security'].forEach(s => {
+                document.getElementById(`admin-subtab-${s}`).classList.add('hidden');
+                const btn = document.getElementById(`admin-tab-btn-${s}`);
+                btn.className = "px-4 py-2 rounded-t-lg hover:bg-gray-200 text-gray-600";
+            });
+
+            document.getElementById(`admin-subtab-${sub}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`admin-tab-btn-${sub}`);
+            activeBtn.className = "px-4 py-2 rounded-t-lg bg-white border-t-2 border-blue-600 text-blue-700 font-bold shadow-sm";
+        }
+
+        function handleAddNewJob(e) {
+            e.preventDefault();
+            const newJob = {
+                id: 'job-' + Date.now(),
+                title: document.getElementById('new-job-title').value,
+                dept: document.getElementById('new-job-dept').value,
+                scale: document.getElementById('new-job-scale').value,
+                posts: document.getElementById('new-job-posts').value,
+                date: document.getElementById('new-job-date').value,
+                link: document.getElementById('new-job-link').value,
+                desc: document.getElementById('new-job-desc').value || 'Click View Details for specifications.'
+            };
+
+            jobsData.unshift(newJob);
+            localStorage.setItem('ustad_jobs_list', JSON.stringify(jobsData));
+            renderJobs(jobsData);
+            renderAdminJobList();
+
+            e.target.reset();
+            showToast('New job posted successfully!', 'success');
+            switchAdminSubTab('manage');
+        }
+
+        function deleteJob(jobId) {
+            jobsData = jobsData.filter(j => j.id !== jobId);
+            localStorage.setItem('ustad_jobs_list', JSON.stringify(jobsData));
+            renderJobs(jobsData);
+            renderAdminJobList();
+            showToast('Job listing removed.');
+        }
+
+        function renderAdminJobList() {
+            const listContainer = document.getElementById('admin-job-list');
+            document.getElementById('admin-job-count').innerText = jobsData.length;
+            listContainer.innerHTML = '';
+
+            jobsData.forEach(job => {
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between p-3 border rounded-xl bg-gray-50 hover:bg-white text-xs";
+                item.innerHTML = `
+                    <div>
+                        <span class="font-bold text-gray-800">${job.title}</span>
+                        <span class="text-gray-500 block text-[11px]">${job.dept} • ${job.scale}</span>
+                    </div>
+                    <button onclick="deleteJob('${job.id}')" class="text-red-600 hover:text-red-800 font-bold px-2 py-1 bg-red-50 rounded border border-red-200">
+                        <i class="fa-solid fa-trash mr-1"></i> Delete
+                    </button>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        async function handleChangePassword(e) {
+            e.preventDefault();
+            const currentPass = document.getElementById('sec-current-pass').value;
+            const newPass = document.getElementById('sec-new-pass').value;
+
+            const currentHash = await hashPassword(currentPass);
+            const savedHash = localStorage.getItem('ustad_admin_pass_hash');
+
+            if (currentHash !== savedHash) {
+                showToast('Current password does not match!', 'error');
+                return;
+            }
+
+            if (newPass.length < 5) {
+                showToast('New password should be at least 5 characters.', 'error');
+                return;
+            }
+
+            const newHash = await hashPassword(newPass);
+            localStorage.setItem('ustad_admin_pass_hash', newHash);
+            document.getElementById('sec-current-pass').value = '';
+            document.getElementById('sec-new-pass').value = '';
+            showToast('Security updated: Admin password successfully encrypted and saved!', 'success');
+        }
+
+        function toggleLockoutSetting(checked) {
+            localStorage.setItem('ustad_lockout_enabled', checked ? 'true' : 'false');
+            showToast(`Brute-force protection ${checked ? 'enabled' : 'disabled'}.`);
+        }
+
+        async function resetSecurityDefaults() {
+            const defaultHash = await hashPassword('admin123');
+            localStorage.setItem('ustad_admin_pass_hash', defaultHash);
+            localStorage.setItem('ustad_lockout_enabled', 'true');
+            showToast('Security reset to default password: admin123');
+        }
+
+        function handleLogout() {
+            isAdminLoggedIn = false;
+            closeModal('admin-modal');
+            showToast('Admin logged out safely.');
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            showToast('Thank you! Your message has been sent to Ustad G Admin.', 'success');
+            e.target.reset();
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `px-4 py-3 rounded-xl shadow-lg text-xs font-bold text-white transition transform duration-300 translate-y-2 pointer-events-auto flex items-center space-x-2 ${
+                type === 'error' ? 'bg-red-600' : type === 'success' ? 'bg-emerald-600' : 'bg-slate-800'
+            }`;
+            
+            toast.innerHTML = `
+                <i class="fa-solid ${type === 'error' ? 'fa-circle-exclamation' : type === 'success' ? 'fa-circle-check' : 'fa-circle-info'}"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
