@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ustad G Product Seller - Best Amazon Deals</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code Generator JS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        amazon: {
+                            DEFAULT: '#FF9900',
+                            dark: '#131921',
+                            light: '#232F3E',
+                            yellow: '#FEBD69'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .product-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-slate-900 text-amber-400 text-xs py-1.5 px-4 text-center font-medium flex justify-between items-center max-w-full overflow-hidden">
+        <span class="truncate"><i class="fa-solid fa-fire mr-1 text-red-500"></i> Ustad G Product Seller - Official Verified Amazon Deals Store</span>
+        <button onclick="openWebsiteShareModal()" class="ml-2 underline text-white hover:text-amber-400 shrink-0 text-xs transition">
+            <i class="fa-solid fa-share-nodes mr-1"></i> Share Store
+        </button>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-amazon-dark text-white sticky top-0 z-40 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('home')">
+                <div class="w-10 h-10 bg-amazon rounded-lg flex items-center justify-center text-slate-900 font-black text-xl shadow-inner">
+                    UG
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight text-white flex items-center">
+                        Ustad G <span class="text-amazon ml-1">Products</span>
+                    </h1>
+                    <p class="text-xs text-gray-400">Trusted Amazon Deals & Best Sellers</p>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md my-1 md:my-0">
+                <div class="relative">
+                    <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Search Amazon products by name..." 
+                        class="w-full pl-10 pr-10 py-2 rounded-lg text-slate-900 bg-white border-2 border-transparent focus:border-amazon focus:outline-none text-sm shadow-sm">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400"></i>
+                    <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-2.5 text-gray-400 hover:text-slate-700">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <button onclick="openWebsiteShareModal()" class="bg-gradient-to-r from-amber-500 to-amazon hover:opacity-90 text-slate-900 font-bold px-3.5 py-2 rounded-lg text-xs sm:text-sm flex items-center space-x-1.5 shadow transition transform active:scale-95">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span class="hidden sm:inline">Share Store Link</span>
+                    <span class="sm:hidden">Share</span>
+                </button>
+                
+                <button onclick="showSection('submit-product')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium px-3 py-2 rounded-lg text-xs sm:text-sm border border-slate-700 flex items-center space-x-1 transition">
+                    <i class="fa-solid fa-plus-circle text-amazon"></i>
+                    <span class="hidden md:inline">Submit Deal</span>
+                </button>
+
+                <button onclick="showSection('admin')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-2 rounded-lg text-xs sm:text-sm border border-slate-700 flex items-center space-x-1 transition" title="Admin Panel">
+                    <i class="fa-solid fa-user-shield text-amber-400"></i>
+                    <span class="hidden md:inline">Admin</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Category Nav Strip -->
+        <nav class="bg-amazon-light px-4 py-2 text-xs overflow-x-auto whitespace-nowrap scrollbar-none border-t border-slate-700 flex items-center space-x-4">
+            <button onclick="showSection('home')" class="nav-tab text-amber-400 font-bold hover:text-amber-300">
+                <i class="fa-solid fa-house mr-1"></i> Home
+            </button>
+            <button onclick="filterCategory('All')" class="category-btn bg-amber-500 text-slate-900 font-semibold px-3 py-1 rounded-full text-xs">All Products</button>
+            <button onclick="filterCategory('Electronics')" class="category-btn hover:text-amber-400 text-gray-300 px-2 py-1">Electronics</button>
+            <button onclick="filterCategory('Gadgets')" class="category-btn hover:text-amber-400 text-gray-300 px-2 py-1">Gadgets</button>
+            <button onclick="filterCategory('Fashion')" class="category-btn hover:text-amber-400 text-gray-300 px-2 py-1">Fashion</button>
+            <button onclick="filterCategory('Home & Kitchen')" class="category-btn hover:text-amber-400 text-gray-300 px-2 py-1">Home & Kitchen</button>
+            <button onclick="openWebsiteShareModal()" class="text-amber-400 font-semibold hover:underline ml-auto flex items-center">
+                <i class="fa-solid fa-link mr-1"></i> Get Store Link
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6">
+
+        <!-- Home Section -->
+        <div id="homeSection">
+            <!-- Hero Banner -->
+            <div class="relative bg-gradient-to-r from-slate-900 via-slate-800 to-amazon-light rounded-2xl p-6 md:p-8 text-white mb-8 shadow-xl overflow-hidden border border-slate-700">
+                <div class="relative z-10 max-w-2xl">
+                    <span class="bg-amber-500/20 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/30 mb-3 inline-block">
+                        <i class="fa-solid fa-check-circle mr-1"></i> Handpicked Amazon Deals
+                    </span>
+                    <h2 class="text-2xl md:text-4xl font-extrabold mb-3 leading-tight">
+                        Welcome to <span class="text-amazon">Ustad G</span> Product Seller
+                    </h2>
+                    <p class="text-gray-300 text-sm md:text-base mb-6 leading-relaxed">
+                        Discover top-rated Amazon products, exclusive discounts, and trending gadgets curated specially for you. Share our website with friends and family!
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="scrollToProducts()" class="bg-amazon hover:bg-amber-600 text-slate-900 font-bold px-5 py-2.5 rounded-lg text-sm transition shadow-lg flex items-center space-x-2">
+                            <span>Browse Deals</span>
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </button>
+                        <button onclick="openWebsiteShareModal()" class="bg-slate-700 hover:bg-slate-600 text-white font-semibold px-5 py-2.5 rounded-lg text-sm border border-slate-500 transition flex items-center space-x-2">
+                            <i class="fa-solid fa-share-nodes text-amber-400"></i>
+                            <span>Share Website Link</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Background decoration icon -->
+                <i class="fa-solid fa-store absolute -right-6 -bottom-6 text-slate-800/40 text-[180px] pointer-events-none hidden md:block"></i>
+            </div>
+
+            <!-- Filters & Sorting Bar -->
+            <div id="productCatalog" class="bg-white rounded-xl p-4 mb-6 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center space-x-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+                    <span class="text-xs font-bold uppercase text-slate-400 tracking-wider mr-2">Filter:</span>
+                    <button onclick="filterCategory('All')" class="filter-pill bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition">All</button>
+                    <button onclick="filterCategory('Electronics')" class="filter-pill bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium transition">Electronics</button>
+                    <button onclick="filterCategory('Gadgets')" class="filter-pill bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium transition">Gadgets</button>
+                    <button onclick="filterCategory('Fashion')" class="filter-pill bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium transition">Fashion</button>
+                    <button onclick="filterCategory('Home & Kitchen')" class="filter-pill bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium transition">Home & Kitchen</button>
+                </div>
+
+                <div class="flex items-center space-x-3 w-full md:w-auto justify-between md:justify-end">
+                    <span class="text-xs text-slate-500 font-medium" id="productCount">Showing 0 products</span>
+                    <select id="sortSelect" onchange="sortProducts()" class="bg-slate-50 border border-slate-300 text-slate-700 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-amazon">
+                        <option value="default">Sort by: Default</option>
+                        <option value="low-high">Price: Low to High</option>
+                        <option value="high-low">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="noProductsFound" class="hidden bg-white rounded-xl p-12 text-center border border-slate-200 my-8">
+                <i class="fa-solid fa-box-open text-5xl text-slate-300 mb-3"></i>
+                <h3 class="text-lg font-bold text-slate-700">No products found</h3>
+                <p class="text-sm text-slate-500 mt-1">Try resetting your search or selecting a different category.</p>
+                <button onclick="resetFilters()" class="mt-4 bg-amazon text-slate-900 font-bold px-4 py-2 rounded-lg text-xs hover:bg-amber-600 transition">Reset All Filters</button>
+            </div>
+        </div>
+
+        <!-- Submit Product Section -->
+        <div id="submitSection" class="hidden max-w-2xl mx-auto bg-white rounded-xl p-6 md:p-8 shadow-md border border-slate-200">
+            <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-100">
+                <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Submit an Amazon Product Deal</h2>
+                    <p class="text-xs text-slate-500">Your deal will be reviewed by Ustad G Admin before going live.</p>
+                </div>
+            </div>
+
+            <form id="submitProductForm" onsubmit="handleProductSubmission(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Product Title *</label>
+                    <input type="text" id="subTitle" required placeholder="e.g., Wireless Noise Cancelling Headphones" 
+                        class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-amazon focus:outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Price ($ or PKR) *</label>
+                        <input type="text" id="subPrice" required placeholder="e.g. $49.99 or 4,999 PKR" 
+                            class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-amazon focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Category *</label>
+                        <select id="subCategory" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-amazon focus:outline-none">
+                            <option value="Electronics">Electronics</option>
+                            <option value="Gadgets">Gadgets</option>
+                            <option value="Fashion">Fashion</option>
+                            <option value="Home & Kitchen">Home & Kitchen</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Amazon Affiliate Link *</label>
+                    <input type="url" id="subLink" required placeholder="https://www.amazon.com/dp/..." 
+                        class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-amazon focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Image URL *</label>
+                    <input type="url" id="subImage" required placeholder="https://images.unsplash.com/..." 
+                        class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-amazon focus:outline-none">
+                    <p class="text-[11px] text-slate-400 mt-1">Paste a direct image link or use standard Amazon product image links.</p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Product Description *</label>
+                    <textarea id="subDesc" rows="3" required placeholder="Brief highlight of features and key details..." 
+                        class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-amazon focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Seller Name / Email</label>
+                    <input type="text" id="subSeller" placeholder="Your Name or Business Tag" 
+                        class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-amazon focus:outline-none">
+                </div>
+
+                <div class="pt-2 flex items-center space-x-3">
+                    <button type="submit" class="flex-1 bg-amazon hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-lg text-sm transition shadow">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Submit for Approval
+                    </button>
+                    <button type="button" onclick="showSection('home')" class="bg-slate-200 text-slate-700 font-medium px-4 py-3 rounded-lg text-sm hover:bg-slate-300 transition">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Admin Panel Section -->
+        <div id="adminSection" class="hidden max-w-5xl mx-auto">
+            
+            <!-- Admin Lock Screen -->
+            <div id="adminAuthBox" class="max-w-md mx-auto bg-white rounded-xl p-8 shadow-lg border border-slate-200 text-center">
+                <div class="w-16 h-16 bg-amber-100 text-amazon rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h2 class="text-xl font-bold text-slate-900 mb-1">Admin Security Portal</h2>
+                <p class="text-xs text-slate-500 mb-6">Enter password to manage products and approvals.</p>
+                
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <input type="password" id="adminPassInput" required placeholder="Enter Admin Password" 
+                        class="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-center text-sm focus:ring-2 focus:ring-amazon focus:outline-none">
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-lg text-sm transition">
+                        Unlock Admin Panel
+                    </button>
+                </form>
+                <p class="text-[11px] text-slate-400 mt-4">Default Admin Password: <span class="font-mono bg-slate-100 px-1 py-0.5 rounded text-slate-600 font-bold">ustadg123</span></p>
+            </div>
+
+            <!-- Admin Dashboard (Hidden until unlocked) -->
+            <div id="adminDashboard" class="hidden space-y-6">
+                <!-- Dashboard Header -->
+                <div class="bg-slate-900 text-white rounded-xl p-6 flex flex-wrap items-center justify-between gap-4 shadow-md">
+                    <div>
+                        <h2 class="text-xl font-bold flex items-center text-amber-400">
+                            <i class="fa-solid fa-user-shield mr-2"></i> Ustad G Admin Control Panel
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Manage live store products, approve seller submissions, and website settings.</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="openWebsiteShareModal()" class="bg-amber-500 text-slate-900 font-bold text-xs px-3 py-2 rounded-lg hover:bg-amber-400 transition">
+                            <i class="fa-solid fa-share-nodes mr-1"></i> Share Store Link
+                        </button>
+                        <button onclick="lockAdmin()" class="bg-red-600/80 text-white font-semibold text-xs px-3 py-2 rounded-lg hover:bg-red-700 transition">
+                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Admin Tabs -->
+                <div class="flex border-b border-slate-200 bg-white rounded-t-xl px-4 pt-3">
+                    <button id="pendingTabBtn" onclick="switchAdminTab('pending')" class="px-4 py-2 font-bold text-sm text-amazon border-b-2 border-amazon flex items-center space-x-2">
+                        <span>Pending Approvals</span>
+                        <span id="pendingBadge" class="bg-amber-500 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded-full">0</span>
+                    </button>
+                    <button id="liveTabBtn" onclick="switchAdminTab('live')" class="px-4 py-2 font-medium text-sm text-slate-500 hover:text-slate-800 flex items-center space-x-2">
+                        <span>Live Products</span>
+                        <span id="liveBadge" class="bg-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-full">0</span>
+                    </button>
+                    <button id="directAddTabBtn" onclick="switchAdminTab('directAdd')" class="px-4 py-2 font-medium text-sm text-slate-500 hover:text-slate-800 flex items-center space-x-1">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                        <span>Quick Add Product</span>
+                    </button>
+                </div>
+
+                <!-- Tab Content 1: Pending Approvals Queue -->
+                <div id="pendingTabContent" class="bg-white rounded-b-xl p-6 border border-t-0 border-slate-200 shadow-sm">
+                    <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Awaiting Review</h3>
+                    <div id="pendingList" class="space-y-4">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+
+                <!-- Tab Content 2: Live Store Products -->
+                <div id="liveTabContent" class="hidden bg-white rounded-b-xl p-6 border border-t-0 border-slate-200 shadow-sm">
+                    <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Active Store Catalog</h3>
+                    <div id="liveAdminList" class="divide-y divide-slate-100">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+
+                <!-- Tab Content 3: Quick Direct Add Product Form -->
+                <div id="directAddTabContent" class="hidden bg-white rounded-b-xl p-6 border border-t-0 border-slate-200 shadow-sm">
+                    <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Add Product Instantly to Live Store</h3>
+                    <form onsubmit="handleDirectProductAdd(event)" class="space-y-4 max-w-xl">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Product Title</label>
+                            <input type="text" id="adminTitle" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-amazon">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Price</label>
+                                <input type="text" id="adminPrice" required placeholder="$29.99" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-amazon">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Category</label>
+                                <select id="adminCategory" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-amazon">
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Gadgets">Gadgets</option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Home & Kitchen">Home & Kitchen</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Amazon Affiliate Link</label>
+                            <input type="url" id="adminLink" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-amazon">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Image URL</label>
+                            <input type="url" id="adminImage" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-amazon">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Description</label>
+                            <textarea id="adminDesc" rows="2" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-amazon"></textarea>
+                        </div>
+                        <button type="submit" class="bg-amazon text-slate-900 font-bold px-5 py-2.5 rounded-lg text-sm hover:bg-amber-600 transition shadow">
+                            Publish Now to Live Store
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- WEBSITE SHARE MODAL (CRITICAL) -->
+    <div id="websiteShareModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 transform transition-all relative">
+            <!-- Close Modal Button -->
+            <button onclick="closeWebsiteShareModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg w-8 h-8 rounded-full flex items-center justify-center bg-slate-100">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="text-center mb-5">
+                <div class="w-14 h-14 bg-amber-100 text-amazon rounded-full flex items-center justify-center mx-auto mb-3 text-2xl shadow-inner">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </div>
+                <h3 class="text-xl font-extrabold text-slate-900">Share Ustad G Store</h3>
+                <p class="text-xs text-slate-500 mt-1">Share our website link with buyers, friends, or social networks!</p>
+            </div>
+
+            <!-- Website URL Box with Copy Button -->
+            <div class="mb-5">
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Official Website Link</label>
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="websiteShareUrlInput" readonly class="bg-slate-100 border border-slate-300 text-slate-700 text-xs rounded-lg px-3 py-2.5 w-full font-mono font-medium focus:outline-none select-all">
+                    <button onclick="copyWebsiteLink()" class="bg-amazon hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-lg text-xs shrink-0 transition flex items-center space-x-1 shadow">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>Copy</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Native Web Share & Social Channels -->
+            <div class="grid grid-cols-2 gap-2.5 mb-5">
+                <button onclick="shareWebsiteWhatsApp()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-3 rounded-lg text-xs flex items-center justify-center space-x-2 transition shadow-sm">
+                    <i class="fa-brands fa-whatsapp text-base"></i>
+                    <span>WhatsApp</span>
+                </button>
+                
+                <button onclick="triggerNativeShare()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 px-3 rounded-lg text-xs flex items-center justify-center space-x-2 transition shadow-sm">
+                    <i class="fa-solid fa-arrow-up-from-bracket text-amber-400"></i>
+                    <span>System Share</span>
+                </button>
+
+                <button onclick="shareWebsiteFacebook()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-3 rounded-lg text-xs flex items-center justify-center space-x-2 transition shadow-sm">
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </button>
+
+                <button onclick="shareWebsiteTelegram()" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-2.5 px-3 rounded-lg text-xs flex items-center justify-center space-x-2 transition shadow-sm">
+                    <i class="fa-brands fa-telegram"></i>
+                    <span>Telegram</span>
+                </button>
+            </div>
+
+            <!-- Dynamic QR Code Container -->
+            <div class="border-t border-slate-100 pt-4 text-center">
+                <p class="text-xs font-semibold text-slate-600 mb-2">Scan QR Code to Open on Phone:</p>
+                <div id="websiteQRCode" class="flex justify-center my-2 p-2 bg-slate-50 border border-slate-200 rounded-lg max-w-[150px] mx-auto"></div>
+            </div>
+
+            <div class="mt-4 text-center">
+                <button onclick="closeWebsiteShareModal()" class="text-xs text-slate-400 hover:text-slate-600 font-medium">Done / Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INDIVIDUAL PRODUCT SHARE MODAL -->
+    <div id="productShareModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 relative">
+            <button onclick="closeProductShareModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg w-8 h-8 rounded-full flex items-center justify-center bg-slate-100">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-4">
+                <span class="bg-amber-100 text-amazon text-xs font-bold px-2.5 py-0.5 rounded-full">Product Link Share</span>
+                <h3 id="shareModalProductTitle" class="text-base font-bold text-slate-900 mt-2 line-clamp-1">Product Name</h3>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Direct Deep Link</label>
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="productShareUrlInput" readonly class="bg-slate-100 border border-slate-300 text-slate-700 text-xs rounded-lg px-3 py-2 w-full font-mono focus:outline-none">
+                    <button onclick="copyProductLink()" class="bg-amazon text-slate-900 font-bold px-3 py-2 rounded-lg text-xs shrink-0 hover:bg-amber-600 transition">
+                        Copy
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="shareProductWhatsApp()" class="bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs flex items-center justify-center space-x-1.5 hover:bg-emerald-600 transition">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Send on WhatsApp</span>
+                </button>
+                <button onclick="shareProductSystem()" class="bg-slate-800 text-white font-bold py-2 rounded-lg text-xs flex items-center justify-center space-x-1.5 hover:bg-slate-700 transition">
+                    <i class="fa-solid fa-share"></i>
+                    <span>More Options</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white font-medium text-xs py-3 px-5 rounded-xl shadow-2xl border border-slate-700 transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center space-x-2 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-amazon text-base" id="toastIcon"></i>
+        <span id="toastMsg">Action completed!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-amazon-dark text-slate-400 py-8 px-4 border-t border-slate-800 mt-12 text-xs">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <div>
+                <p class="text-white font-bold text-sm">Ustad G Product Seller</p>
+                <p class="text-slate-400 mt-0.5">As an Amazon Associate, we earn from qualifying purchases.</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="openWebsiteShareModal()" class="text-amber-400 hover:underline">
+                    <i class="fa-solid fa-share-nodes mr-1"></i> Share Website
+                </button>
+                <button onclick="showSection('submit-product')" class="hover:text-white">Submit Deal</button>
+                <button onclick="showSection('admin')" class="hover:text-white">Admin Login</button>
+            </div>
+            <div class="text-slate-400">
+                &copy; <span id="year">2026</span> Ustad G Products. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // INITIAL DATA & STORAGE MANAGEMENT
+        // ==========================================
+        const DEFAULT_PRODUCTS = [
+            {
+                id: "prod_1",
+                title: "Wireless ANC Bluetooth Over-Ear Headphones",
+                price: "$59.99",
+                priceNum: 59.99,
+                category: "Electronics",
+                link: "https://www.amazon.com/dp/B08HMWZBXC",
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+                description: "Deep bass, active noise cancellation, and up to 30 hours of battery life. Perfect for travel and everyday listening."
+            },
+            {
+                id: "prod_2",
+                title: "Smart Fitness Watch with Heart Rate & Sleep Monitor",
+                price: "$39.99",
+                priceNum: 39.99,
+                category: "Gadgets",
+                link: "https://www.amazon.com/dp/B07Y1L3X5Y",
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80",
+                description: "Track steps, heart rate, sleep metrics, and smart notifications with HD touch screen display."
+            },
+            {
+                id: "prod_3",
+                title: "Classic Leather Men's Minimalist Wallet",
+                price: "$24.50",
+                priceNum: 24.50,
+                category: "Fashion",
+                link: "https://www.amazon.com/dp/B01F3E1N92",
+                image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80",
+                description: "100% genuine leather with RFID blocking technology. Holds up to 10 cards and cash comfortably."
+            },
+            {
+                id: "prod_4",
+                title: "Stainless Steel Espresso Coffee Maker & Milk Frother",
+                price: "$89.90",
+                priceNum: 89.90,
+                category: "Home & Kitchen",
+                link: "https://www.amazon.com/dp/B00005NCX5",
+                image: "https://images.unsplash.com/photo-1517668808822-9a04227a31d0?auto=format&fit=crop&w=600&q=80",
+                description: "15-bar pump system for rich espresso at home. Includes powerful steam wand for cappuccinos and lattes."
+            }
+        ];
+
+        let products = JSON.parse(localStorage.getItem("ustadg_products")) || DEFAULT_PRODUCTS;
+        let pendingProducts = JSON.parse(localStorage.getItem("ustadg_pending")) || [];
+        let adminPass = localStorage.getItem("ustadg_admin_pass") || "ustadg123";
+        let isAdminLoggedIn = false;
+        let activeCategory = "All";
+        let currentShareProductId = null;
+
+        // Initialize App
+        window.addEventListener("DOMContentLoaded", () => {
+            renderProducts();
+            updateBadges();
+            initWebsiteShareUrl();
+            checkDeepLink();
+            document.getElementById("year").textContent = new Date().getFullYear();
+        });
+
+        // Save State helper
+        function saveState() {
+            localStorage.setItem("ustadg_products", JSON.stringify(products));
+            localStorage.setItem("ustadg_pending", JSON.stringify(pendingProducts));
+            updateBadges();
+        }
+
+        // ==========================================
+        // SECTION NAVIGATION
+        // ==========================================
+        function showSection(section) {
+            document.getElementById("homeSection").classList.add("hidden");
+            document.getElementById("submitSection").classList.add("hidden");
+            document.getElementById("adminSection").classList.add("hidden");
+
+            if (section === "home") {
+                document.getElementById("homeSection").classList.remove("hidden");
+            } else if (section === "submit-product") {
+                document.getElementById("submitSection").classList.remove("hidden");
+            } else if (section === "admin") {
+                document.getElementById("adminSection").classList.remove("hidden");
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToProducts() {
+            document.getElementById("productCatalog").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ==========================================
+        // PRODUCT CATALOG & FILTERING
+        // ==========================================
+        function renderProducts() {
+            const grid = document.getElementById("productGrid");
+            const countEl = document.getElementById("productCount");
+            const emptyEl = document.getElementById("noProductsFound");
+            const searchVal = document.getElementById("searchInput").value.toLowerCase().trim();
+            const sortVal = document.getElementById("sortSelect").value;
+
+            // Filter
+            let filtered = products.filter(p => {
+                const matchesCat = (activeCategory === "All") || (p.category === activeCategory);
+                const matchesSearch = p.title.toLowerCase().includes(searchVal) || p.description.toLowerCase().includes(searchVal);
+                return matchesCat && matchesSearch;
+            });
+
+            // Sort
+            if (sortVal === "low-high") {
+                filtered.sort((a, b) => (a.priceNum || parseFloat(a.price) || 0) - (b.priceNum || parseFloat(b.price) || 0));
+            } else if (sortVal === "high-low") {
+                filtered.sort((a, b) => (b.priceNum || parseFloat(b.price) || 0) - (a.priceNum || parseFloat(a.price) || 0));
+            }
+
+            countEl.textContent = `Showing ${filtered.length} products`;
+            grid.innerHTML = "";
+
+            if (filtered.length === 0) {
+                emptyEl.classList.remove("hidden");
+                return;
+            } else {
+                emptyEl.classList.add("hidden");
+            }
+
+            filtered.forEach(prod => {
+                const card = document.createElement("div");
+                card.id = `card-${prod.id}`;
+                card.className = "product-card bg-white rounded-xl shadow-sm hover:shadow-xl border border-slate-200 overflow-hidden flex flex-col justify-between";
+                
+                card.innerHTML = `
+                    <div>
+                        <!-- Product Image -->
+                        <div class="relative h-48 bg-slate-100 overflow-hidden group">
+                            <img src="${prod.image}" alt="${escapeHtml(prod.title)}" onerror="this.src='https://placehold.co/600x400/232F3E/FF9900?text=Ustad+G+Store'" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <span class="absolute top-2 left-2 bg-slate-900/80 backdrop-blur-sm text-amber-400 text-[10px] font-bold px-2.5 py-1 rounded-md border border-slate-700">
+                                ${escapeHtml(prod.category)}
+                            </span>
+                        </div>
+
+                        <!-- Info Body -->
+                        <div class="p-4">
+                            <h3 class="font-bold text-slate-900 text-sm line-clamp-2 hover:text-amazon transition leading-snug">
+                                ${escapeHtml(prod.title)}
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                                ${escapeHtml(prod.description)}
+                            </p>
+                            <div class="mt-3 flex items-baseline justify-between">
+                                <span class="text-lg font-black text-slate-900">${escapeHtml(prod.price)}</span>
+                                <span class="text-[11px] text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded">
+                                    <i class="fa-solid fa-check mr-1"></i>In Stock
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions Footer -->
+                    <div class="p-4 pt-0 space-y-2">
+                        <!-- Buy on Amazon Button (100% Working Link) -->
+                        <a href="${prod.link}" target="_blank" rel="noopener noreferrer" 
+                            class="w-full bg-gradient-to-r from-amazon to-amber-500 hover:from-amber-500 hover:to-amazon text-slate-900 font-black py-2.5 px-4 rounded-lg text-xs flex items-center justify-center space-x-2 shadow-sm transition active:scale-95">
+                            <i class="fa-brands fa-amazon text-sm"></i>
+                            <span>Buy on Amazon</span>
+                            <i class="fa-solid fa-arrow-right text-[10px] ml-1"></i>
+                        </a>
+
+                        <!-- Share Product Button -->
+                        <button onclick="openProductShareModal('${prod.id}')" 
+                            class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-1.5 px-3 rounded-lg text-xs flex items-center justify-center space-x-1.5 transition">
+                            <i class="fa-solid fa-share-nodes text-slate-500"></i>
+                            <span>Share Product Link</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            
+            // Update filter pill styles
+            document.querySelectorAll(".filter-pill").forEach(btn => {
+                if (btn.textContent.trim() === cat || (cat === "All" && btn.textContent.trim() === "All")) {
+                    btn.className = "filter-pill bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition";
+                } else {
+                    btn.className = "filter-pill bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium transition";
+                }
+            });
+
+            renderProducts();
+        }
+
+        function filterProducts() {
+            const val = document.getElementById("searchInput").value;
+            document.getElementById("clearSearchBtn").classList.toggle("hidden", !val);
+            renderProducts();
+        }
+
+        function clearSearch() {
+            document.getElementById("searchInput").value = "";
+            document.getElementById("clearSearchBtn").classList.add("hidden");
+            renderProducts();
+        }
+
+        function sortProducts() {
+            renderProducts();
+        }
+
+        function resetFilters() {
+            activeCategory = "All";
+            document.getElementById("searchInput").value = "";
+            document.getElementById("clearSearchBtn").classList.add("hidden");
+            document.getElementById("sortSelect").value = "default";
+            filterCategory("All");
+        }
+
+        // ==========================================
+        // WEBSITE SHARE SYSTEM (CRITICAL REQUIREMENT)
+        // ==========================================
+        function getStoreUrl() {
+            // Strip any trailing deep hashes to get base URL
+            return window.location.origin + window.location.pathname;
+        }
+
+        function initWebsiteShareUrl() {
+            const url = getStoreUrl();
+            const input = document.getElementById("websiteShareUrlInput");
+            if (input) input.value = url;
+        }
+
+        function openWebsiteShareModal() {
+            const url = getStoreUrl();
+            document.getElementById("websiteShareUrlInput").value = url;
+            
+            // Generate QR Code dynamically
+            const qrContainer = document.getElementById("websiteQRCode");
+            qrContainer.innerHTML = "";
+            if (window.QRCode) {
+                new QRCode(qrContainer, {
+                    text: url,
+                    width: 130,
+                    height: 130,
+                    colorDark: "#131921",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }
+
+            document.getElementById("websiteShareModal").classList.remove("hidden");
+        }
+
+        function closeWebsiteShareModal() {
+            document.getElementById("websiteShareModal").classList.add("hidden");
+        }
+
+        function copyWebsiteLink() {
+            const url = getStoreUrl();
+            copyToClipboard(url);
+            showToast("Website Link Copied to Clipboard!");
+        }
+
+        function shareWebsiteWhatsApp() {
+            const url = getStoreUrl();
+            const msg = `Check out Ustad G Product Seller for best Amazon deals & verified items: ${url}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function shareWebsiteFacebook() {
+            const url = getStoreUrl();
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function shareWebsiteTelegram() {
+            const url = getStoreUrl();
+            const msg = "Check out Ustad G Product Seller for best Amazon deals!";
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function triggerNativeShare() {
+            const url = getStoreUrl();
+            if (navigator.share) {
+                navigator.share({
+                    title: "Ustad G Product Seller",
+                    text: "Check out Ustad G Product Seller for verified Amazon products and deals!",
+                    url: url
+                }).catch(() => {});
+            } else {
+                copyWebsiteLink();
+            }
+        }
+
+        // ==========================================
+        // INDIVIDUAL PRODUCT SHARE SYSTEM
+        // ==========================================
+        function openProductShareModal(productId) {
+            const prod = products.find(p => p.id === productId);
+            if (!prod) return;
+
+            currentShareProductId = productId;
+            const deepLink = `${getStoreUrl()}#product=${productId}`;
+            
+            document.getElementById("shareModalProductTitle").textContent = prod.title;
+            document.getElementById("productShareUrlInput").value = deepLink;
+            document.getElementById("productShareModal").classList.remove("hidden");
+        }
+
+        function closeProductShareModal() {
+            document.getElementById("productShareModal").classList.add("hidden");
+            currentShareProductId = null;
+        }
+
+        function copyProductLink() {
+            const input = document.getElementById("productShareUrlInput");
+            copyToClipboard(input.value);
+            showToast("Product Link Copied!");
+        }
+
+        function shareProductWhatsApp() {
+            if (!currentShareProductId) return;
+            const prod = products.find(p => p.id === currentShareProductId);
+            const link = `${getStoreUrl()}#product=${prod.id}`;
+            const msg = `Check out this Amazon deal on Ustad G Products: *${prod.title}* (${prod.price})\nLink: ${link}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function shareProductSystem() {
+            if (!currentShareProductId) return;
+            const prod = products.find(p => p.id === currentShareProductId);
+            const link = `${getStoreUrl()}#product=${prod.id}`;
+            if (navigator.share) {
+                navigator.share({
+                    title: prod.title,
+                    text: `Amazon Deal: ${prod.title} for ${prod.price}`,
+                    url: link
+                }).catch(() => {});
+            } else {
+                copyProductLink();
+            }
+        }
+
+        function checkDeepLink() {
+            const hash = window.location.hash;
+            if (hash.startsWith("#product=")) {
+                const prodId = hash.replace("#product=", "");
+                setTimeout(() => {
+                    const card = document.getElementById(`card-${prodId}`);
+                    if (card) {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        card.classList.add("ring-4", "ring-amazon", "transition-all");
+                        setTimeout(() => card.classList.remove("ring-4", "ring-amazon"), 3500);
+                    }
+                }, 500);
+            }
+        }
+
+        // ==========================================
+        // SELLER SUBMISSION SYSTEM
+        // ==========================================
+        function handleProductSubmission(e) {
+            e.preventDefault();
+            const newPending = {
+                id: "pend_" + Date.now(),
+                title: document.getElementById("subTitle").value.trim(),
+                price: document.getElementById("subPrice").value.trim(),
+                priceNum: parseFloat(document.getElementById("subPrice").value.replace(/[^0-9.]/g, '')) || 0,
+                category: document.getElementById("subCategory").value,
+                link: document.getElementById("subLink").value.trim(),
+                image: document.getElementById("subImage").value.trim(),
+                description: document.getElementById("subDesc").value.trim(),
+                seller: document.getElementById("subSeller").value.trim() || "Anonymous Seller",
+                date: new Date().toLocaleDateString()
+            };
+
+            pendingProducts.push(newPending);
+            saveState();
+
+            document.getElementById("submitProductForm").reset();
+            showToast("Product submitted! Pending Admin Approval.");
+            showSection("home");
+        }
+
+        // ==========================================
+        // ADMIN PANEL & SECURITY
+        // ==========================================
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById("adminPassInput").value;
+            if (pass === adminPass) {
+                isAdminLoggedIn = true;
+                document.getElementById("adminAuthBox").classList.add("hidden");
+                document.getElementById("adminDashboard").classList.remove("hidden");
+                renderAdminPendingList();
+                renderAdminLiveList();
+                showToast("Admin Panel Unlocked!");
+            } else {
+                showToast("Incorrect Admin Password!");
+            }
+        }
+
+        function lockAdmin() {
+            isAdminLoggedIn = false;
+            document.getElementById("adminAuthBox").classList.remove("hidden");
+            document.getElementById("adminDashboard").classList.add("hidden");
+            document.getElementById("adminPassInput").value = "";
+            showToast("Logged out of Admin");
+        }
+
+        function switchAdminTab(tab) {
+            document.getElementById("pendingTabContent").classList.add("hidden");
+            document.getElementById("liveTabContent").classList.add("hidden");
+            document.getElementById("directAddTabContent").classList.add("hidden");
+
+            document.getElementById("pendingTabBtn").className = "px-4 py-2 font-medium text-sm text-slate-500 hover:text-slate-800 flex items-center space-x-2";
+            document.getElementById("liveTabBtn").className = "px-4 py-2 font-medium text-sm text-slate-500 hover:text-slate-800 flex items-center space-x-2";
+            document.getElementById("directAddTabBtn").className = "px-4 py-2 font-medium text-sm text-slate-500 hover:text-slate-800 flex items-center space-x-1";
+
+            if (tab === 'pending') {
+                document.getElementById("pendingTabContent").classList.remove("hidden");
+                document.getElementById("pendingTabBtn").className = "px-4 py-2 font-bold text-sm text-amazon border-b-2 border-amazon flex items-center space-x-2";
+                renderAdminPendingList();
+            } else if (tab === 'live') {
+                document.getElementById("liveTabContent").classList.remove("hidden");
+                document.getElementById("liveTabBtn").className = "px-4 py-2 font-bold text-sm text-amazon border-b-2 border-amazon flex items-center space-x-2";
+                renderAdminLiveList();
+            } else if (tab === 'directAdd') {
+                document.getElementById("directAddTabContent").classList.remove("hidden");
+                document.getElementById("directAddTabBtn").className = "px-4 py-2 font-bold text-sm text-amazon border-b-2 border-amazon flex items-center space-x-1";
+            }
+        }
+
+        function updateBadges() {
+            document.getElementById("pendingBadge").textContent = pendingProducts.length;
+            document.getElementById("liveBadge").textContent = products.length;
+        }
+
+        function renderAdminPendingList() {
+            const list = document.getElementById("pendingList");
+            list.innerHTML = "";
+
+            if (pendingProducts.length === 0) {
+                list.innerHTML = `<div class="text-center py-8 text-slate-400 text-xs">No pending items awaiting approval.</div>`;
+                return;
+            }
+
+            pendingProducts.forEach(item => {
+                const row = document.createElement("div");
+                row.className = "bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4";
+                row.innerHTML = `
+                    <div class="flex items-center space-x-3 flex-1">
+                        <img src="${item.image}" class="w-14 h-14 rounded-lg object-cover bg-slate-200 shrink-0">
+                        <div>
+                            <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">${item.category}</span>
+                            <h4 class="font-bold text-sm text-slate-900 mt-0.5">${escapeHtml(item.title)}</h4>
+                            <p class="text-xs font-black text-slate-800">${item.price} • <span class="font-normal text-slate-500">By: ${escapeHtml(item.seller)}</span></p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 w-full md:w-auto justify-end">
+                        <button onclick="approveProduct('${item.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs flex items-center space-x-1 shadow">
+                            <i class="fa-solid fa-check"></i>
+                            <span>Approve</span>
+                        </button>
+                        <button onclick="rejectProduct('${item.id}')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs flex items-center space-x-1 shadow">
+                            <i class="fa-solid fa-xmark"></i>
+                            <span>Reject</span>
+                        </button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function approveProduct(id) {
+            const idx = pendingProducts.findIndex(p => p.id === id);
+            if (idx > -1) {
+                const item = pendingProducts[idx];
+                item.id = "prod_" + Date.now(); // convert ID
+                products.unshift(item);
+                pendingProducts.splice(idx, 1);
+                saveState();
+                renderProducts();
+                renderAdminPendingList();
+                showToast("Product Approved & Added to Store!");
+            }
+        }
+
+        function rejectProduct(id) {
+            pendingProducts = pendingProducts.filter(p => p.id !== id);
+            saveState();
+            renderAdminPendingList();
+            showToast("Submission Rejected.");
+        }
+
+        function renderAdminLiveList() {
+            const list = document.getElementById("liveAdminList");
+            list.innerHTML = "";
+
+            products.forEach(item => {
+                const row = document.createElement("div");
+                row.className = "py-3 flex items-center justify-between gap-4";
+                row.innerHTML = `
+                    <div class="flex items-center space-x-3 flex-1 min-w-0">
+                        <img src="${item.image}" class="w-10 h-10 rounded object-cover bg-slate-100 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <h4 class="font-semibold text-xs text-slate-900 truncate">${escapeHtml(item.title)}</h4>
+                            <p class="text-[11px] text-slate-500">${item.price} • ${item.category}</p>
+                        </div>
+                    </div>
+                    <button onclick="deleteLiveProduct('${item.id}')" class="text-red-500 hover:text-red-700 text-xs p-2 rounded hover:bg-red-50 transition">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function deleteLiveProduct(id) {
+            if (confirm("Are you sure you want to delete this live product?")) {
+                products = products.filter(p => p.id !== id);
+                saveState();
+                renderProducts();
+                renderAdminLiveList();
+                showToast("Product removed from live store.");
+            }
+        }
+
+        function handleDirectProductAdd(e) {
+            e.preventDefault();
+            const newProd = {
+                id: "prod_" + Date.now(),
+                title: document.getElementById("adminTitle").value.trim(),
+                price: document.getElementById("adminPrice").value.trim(),
+                priceNum: parseFloat(document.getElementById("adminPrice").value.replace(/[^0-9.]/g, '')) || 0,
+                category: document.getElementById("adminCategory").value,
+                link: document.getElementById("adminLink").value.trim(),
+                image: document.getElementById("adminImage").value.trim(),
+                description: document.getElementById("adminDesc").value.trim()
+            };
+
+            products.unshift(newProd);
+            saveState();
+            renderProducts();
+            e.target.reset();
+            switchAdminTab('live');
+            showToast("Product published to live store!");
+        }
+
+        // ==========================================
+        // UTILS & TOAST NOTIFICATIONS
+        // ==========================================
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const input = document.createElement("input");
+                input.value = text;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand("copy");
+                document.body.removeChild(input);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toastMsg").textContent = message;
+            
+            toast.classList.remove("translate-y-20", "opacity-0");
+            toast.classList.add("translate-y-0", "opacity-100");
+
+            setTimeout(() => {
+                toast.classList.remove("translate-y-0", "opacity-100");
+                toast.classList.add("translate-y-20", "opacity-0");
+            }, 3000);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return "";
+            return str.replace(/[&<>"']/g, function(m) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                }[m];
+            });
+        }
+    </script>
+</body>
+</html>
